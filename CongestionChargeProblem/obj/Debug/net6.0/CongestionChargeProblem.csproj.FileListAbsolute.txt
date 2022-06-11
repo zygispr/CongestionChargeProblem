@@ -28,3 +28,6 @@
 /Users/zygispr/Desktop/Programming/CongestionChargeProblem/CongestionChargeProblem/obj/Debug/net6.0/CongestionChargeProblem.pdb
 /Users/zygispr/Desktop/Programming/CongestionChargeProblem/CongestionChargeProblem/obj/Debug/net6.0/CongestionChargeProblem.genruntimeconfig.cache
 /Users/zygispr/Desktop/Programming/CongestionChargeProblem/CongestionChargeProblem/obj/Debug/net6.0/ref/CongestionChargeProblem.dll
+/Users/zygispr/Desktop/Programming/CongestionChargeProblem/CongestionChargeProblem/bin/Debug/net6.0/Newtonsoft.Json.dll
+/Users/zygispr/Desktop/Programming/CongestionChargeProblem/CongestionChargeProblem/bin/Debug/net6.0/WebDriver.dll
+/Users/zygispr/Desktop/Programming/CongestionChargeProblem/CongestionChargeProblem/obj/Debug/net6.0/CongestionChargeProblem.csproj.CopyComplete

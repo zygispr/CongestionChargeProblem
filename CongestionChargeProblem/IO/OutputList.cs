@@ -14,63 +14,104 @@ public class OutputList
 
         foreach (var input in inputList.Inputs)
         {
-            TimeSpan timeSpanAM = TimeSpan.Zero;
-            TimeSpan timeSpanPM = TimeSpan.Zero;
-            TimeSpan timeDifference = new TimeSpan();
+            // "timeVar" is the main variable that is used in calculations below.
+            // It is equal to the input's StartTime at the beginning.
+            // The while cycle continues until timeVar doesn't reach the input's EndTime.
+            DateTime timeVar = input.StartTime; 
+            
+            TimeSpan timeSpanAM = TimeSpan.Zero; // Represents the time span that passed while the AM rate was active
+            TimeSpan timeSpanPM = TimeSpan.Zero; // Represents the time span that passed while the PM rate was active
+            TimeSpan timeDifference = new TimeSpan(); // A variable time span that is used in various calculations below
 
-            TimeOnly sevenAm = new TimeOnly(7, 0);
-            TimeOnly twelvePm = new TimeOnly(12, 0);
-            TimeOnly sevenPm = new TimeOnly(19, 0);
+            // These variables represent the hour marks when the congestion charge rate changes
+            // (it is possible to change the hour marks):
+            TimeOnly morningHourMark = new TimeOnly(7, 0);
+            TimeOnly afternoonHourMark = new TimeOnly(12, 0);
+            TimeOnly eveningHourMark = new TimeOnly(19, 0);
 
             // Console.WriteLine("Start:");
-            // Console.WriteLine(input.StartTime.ToString("dd/MM/yyyy HH:mm"));
+            // Console.WriteLine(timeVar.ToString("dd/MM/yyyy HH:mm"));
             // Console.WriteLine($"timeSpanAM: {timeSpanAM}");
             // Console.WriteLine($"timeSpanPM: {timeSpanPM}");
             // Console.WriteLine();
+            
+            int addHours;
+            int addMinutes;
 
-            for (int i = 0; i < 2; i++)
+            while(timeVar < input.EndTime)
+                // for (int i = 0; i < 2; i++)
             {
-                if (input.StartTime.DayOfWeek == DayOfWeek.Saturday || input.StartTime.DayOfWeek == DayOfWeek.Sunday)
+                if (timeVar.DayOfWeek == DayOfWeek.Saturday || timeVar.DayOfWeek == DayOfWeek.Sunday)
                 {
-                    Console.WriteLine("weekend");
-                } else if (input.StartTime.Hour >= 19)
-                {
-                    Console.WriteLine(">=19");
-                    input.StartTime = input.StartTime.AddHours(12);
-
-                } else if (input.StartTime.Hour >= 12)
-                {
-                    Console.WriteLine(">=12");
-
-                    if (TimeOnly.FromDateTime(input.EndTime) > sevenPm)
+                    // Console.WriteLine("weekend");
+                    
+                    if (timeVar.Hour < morningHourMark.Hour)
                     {
-                        timeDifference = sevenPm - TimeOnly.FromDateTime(input.StartTime);
+                        addHours = morningHourMark.Hour - timeVar.Hour;
                     }
                     else
                     {
-                        timeDifference = input.EndTime - input.StartTime;
+                        addHours = 24 + morningHourMark.Hour - timeVar.Hour;
+                    }
+                    
+                    addMinutes = 60 - timeVar.Minute;
+                    if (addMinutes > 0)
+                    {
+                        addHours--;
+                    }
+
+                    timeVar = timeVar.Add(new TimeSpan(addHours, addMinutes, 0));
+                } else if (timeVar.Hour >= eveningHourMark.Hour)
+                {
+                    // Console.WriteLine($">={eveningHourMark.Hour}");
+                    
+                    addHours = 24 + morningHourMark.Hour - timeVar.Hour;
+                    addMinutes = 60 - timeVar.Minute;
+                    if (addMinutes > 0)
+                    {
+                        addHours--;
+                    }
+
+                    timeVar = timeVar.Add(new TimeSpan(addHours, addMinutes, 0));
+                } else if (timeVar.Hour >= afternoonHourMark.Hour)
+                {
+                    // Console.WriteLine($">={afternoonHourMark.Hour}");
+
+                    if ((input.EndTime.DayOfYear > timeVar.DayOfYear && input.EndTime.Year == timeVar.Year) ||  TimeOnly.FromDateTime(input.EndTime) > eveningHourMark || input.EndTime.Year > timeVar.Year)
+                    {
+                        timeDifference = eveningHourMark - TimeOnly.FromDateTime(timeVar);
+                    }
+                    else
+                    {
+                        timeDifference = input.EndTime - timeVar;
                     }
                     
                     timeSpanPM += timeDifference;
-                    input.StartTime = input.StartTime.Add(timeDifference);
-                } else if (input.StartTime.Hour >= 7)
+                    timeVar = timeVar.Add(timeDifference);
+                } else if (timeVar.Hour >= morningHourMark.Hour)
                 {
-                    Console.WriteLine(">=7");
-
-                    if (TimeOnly.FromDateTime(input.EndTime) > twelvePm)
+                    // Console.WriteLine($">={morningHourMark.Hour}");
+                    
+                    if ((input.EndTime.DayOfYear > timeVar.DayOfYear && input.EndTime.Year == timeVar.Year) || TimeOnly.FromDateTime(input.EndTime) > afternoonHourMark || input.EndTime.Year > timeVar.Year)
                     {
-                        timeDifference = twelvePm - TimeOnly.FromDateTime(input.StartTime);
+                        timeDifference = afternoonHourMark - TimeOnly.FromDateTime(timeVar);
                     }
                     else
                     {
-                        timeDifference = input.EndTime - input.StartTime;
+                        timeDifference = input.EndTime - timeVar;
                     }
                     
                     timeSpanAM += timeDifference;
-                    input.StartTime = input.StartTime.Add(timeDifference);
+                    timeVar = timeVar.Add(timeDifference);
+                } else if (timeVar.Hour >= 0)
+                {
+                    // Console.WriteLine(">=0");
+
+                    timeDifference = morningHourMark - TimeOnly.FromDateTime(timeVar);
+                    timeVar = timeVar.Add(timeDifference);
                 }
                 
-                // Console.WriteLine(input.StartTime.ToString("dd/MM/yyyy HH:mm"));
+                // Console.WriteLine(timeVar.ToString("dd/MM/yyyy HH:mm"));
                 // Console.WriteLine($"timeSpanAM: {timeSpanAM}");
                 // Console.WriteLine($"timeSpanPM: {timeSpanPM}");
                 // Console.WriteLine();

@@ -16,13 +16,13 @@ public class InputList
         {
             // I am using Regex to easily get the wanted parts of the input strings.
             
-            // Here I get the vehicle name:
+            // Here I get the vehicle Name:
             string pattern = @"\w+";
             Regex rg = new Regex(pattern);
             MatchCollection matchCollection = rg.Matches(inputString);
             string name = matchCollection[0].Value;
             
-            // Here I get the start and end DateTimes:
+            // Here I get the StartTime and EndTime:
             pattern = @"\d{2}\/\d{2}\/\d{4}\s\d{2}:\d{2}";
             rg = new Regex(pattern);
             matchCollection = rg.Matches(inputString);
@@ -33,27 +33,6 @@ public class InputList
         }
     }
 
-    /*
-    public void CalculateCharges(InputList inputList)
-    {
-        int index = 1;
-        ChargeRate chargeRate;
-        
-        foreach (var input in inputList.Inputs)
-        {
-            Console.WriteLine(input.StartTime);
-            input.StartTime = input.StartTime.AddMinutes(28);
-            Console.WriteLine(input.StartTime);
-
-            index++;
-            if (index > 1)
-            {
-                break;
-            }
-        }
-    }
-    */
-
     public override string ToString()
     {
         int index = 1;
@@ -62,7 +41,7 @@ public class InputList
         foreach (var input in Inputs)
         {
             sb.Append($"INPUT {index}\n");
-            sb.Append($"{input.Name}: {input.StartTime} - {input.EndTime}\n");
+            sb.Append($"{input.Name}: {input.StartTime.ToString("dd/MM/yyyy HH:mm")} - {input.EndTime.ToString("dd/MM/yyyy HH:mm")}\n");
             index++;
         }
 

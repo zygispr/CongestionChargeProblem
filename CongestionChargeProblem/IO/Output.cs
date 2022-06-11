@@ -1,12 +1,10 @@
-using System.Text.RegularExpressions;
-
 namespace CongestionChargeProblem;
 
 public class Output
 {
     public TimeSpan TimeSpanAM { get; set; }
-    public double AMRate { get; set; }
     public TimeSpan TimeSpanPM { get; set; }
+    public double AMRate { get; set; }
     public double PMRate { get; set; }
     public double AMCharge { get; set; }
     public double PMCharge { get; set; }
@@ -29,17 +27,11 @@ public class Output
         }
 
         AMCharge = (timeSpanAM.Hours * 60 + timeSpanAM.Minutes) * AMRate / 60;
-        AMCharge = Math.Round(AMCharge, 1);
+        AMCharge = Math.Floor(AMCharge * 10) / 10;
         
         PMCharge = (timeSpanPM.Hours * 60 + timeSpanPM.Minutes) * PMRate / 60;
-        PMCharge = Math.Round(PMCharge, 1);
-
-        Console.WriteLine();
-        Console.WriteLine(PMCharge);
-        Console.WriteLine(Math.Truncate(PMCharge));
-        Console.WriteLine();
+        PMCharge = Math.Floor(PMCharge * 10) / 10;
         
-        // Laikinas priskyrimas, kol sugalvosiu kaip skaiciuoti:
         TotalCharge = AMCharge + PMCharge;
     }
 }
