@@ -26,7 +26,7 @@ public class OutputList
             TimeSpan timeSpanAM = TimeSpan.Zero; // Represents the time span that passed while the AM rate was active
             TimeSpan timeSpanPM = TimeSpan.Zero; // Represents the time span that passed while the PM rate was active
             TimeSpan timeDifference = TimeSpan.Zero; // Represents how many hours and minutes need to be added to timeSpanAM/timeSpanPM/timeVar
-
+            
             while (timeVar < input.EndTime)
             {
                 timeDifference = CalculateTimeDifference(timeVar, input.EndTime);
@@ -40,10 +40,9 @@ public class OutputList
 
     private TimeSpan CalculateTimeDifference(DateTime timeVar, DateTime endTime)
     {
-        // These variables represent how many hours or minutes need to be added to timeSpanAM/timeSpanPM/timeVar:
+        // These variables represent how many hours and minutes need to be added to timeSpanAM/timeSpanPM/timeVar:
         int addHours = 0;
         int addMinutes = 0;
-        TimeSpan timeDifference = new TimeSpan(addHours, addMinutes, 0);
 
         if (timeVar.DayOfWeek == DayOfWeek.Saturday || timeVar.DayOfWeek == DayOfWeek.Sunday)
         {
@@ -98,7 +97,8 @@ public class OutputList
             (addHours, addMinutes) =
                 CalculateAddHoursAndAddMinutes(morningHourMark, timeVar.Hour, 60, timeVar.Minute, true);
         }
-        timeDifference = new TimeSpan(addHours, addMinutes, 0);
+        
+        TimeSpan timeDifference = new TimeSpan(addHours, addMinutes, 0);
 
         return timeDifference;
     }
