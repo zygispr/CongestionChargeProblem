@@ -1,4 +1,8 @@
 ﻿<Properties StartupConfiguration="{C25C95AD-5384-41BC-9EE5-A1AAA705307E}|Default">
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workbench ActiveDocument="CongestionChargeProblem/Program.cs">
     <Files>
       <File FileName="CongestionChargeProblem/Program.cs" Line="1" Column="1" />
@@ -7,9 +11,7 @@
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="CongestionChargeProblem" expanded="True">
-            <Node name="CongestionChargeProblem" expanded="True">
-              <Node name="Program.cs" selected="True" />
-            </Node>
+            <Node name="CongestionChargeProblem" expanded="True" />
           </Node>
         </State>
       </Pad>
@@ -18,11 +20,7 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.ItemProperties.CongestionChargeProblem PreferredExecutionTarget="MonoDevelop.Default" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>

@@ -14,25 +14,23 @@ public class InputList
     
         foreach (string inputString in inputStrings)
         {
-            // I am using Regex to easily get the wanted parts of the input strings.
+            // I am using Regex to easily get the wanted parts of the INPUT strings.
             
             // Here I get the vehicle Name:
             string pattern = @"\w+";
-            Regex rg = new Regex(pattern);
-            MatchCollection matchCollection = rg.Matches(inputString);
+            MatchCollection matchCollection = Regex.Matches(inputString, pattern);
             string name = matchCollection[0].Value;
             
             // Here I get the StartTime and EndTime:
             pattern = @"\d{2}\/\d{2}\/\d{4}\s\d{2}:\d{2}";
-            rg = new Regex(pattern);
-            matchCollection = rg.Matches(inputString);
-            DateTime startDate = DateTime.Parse(matchCollection[0].Value, new CultureInfo("en-GB"));
-            DateTime endDate = DateTime.Parse(matchCollection[1].Value, new CultureInfo("en-GB"));
+            matchCollection = Regex.Matches(inputString, pattern);
+            DateTime startTime = DateTime.Parse(matchCollection[0].Value, new CultureInfo("en-GB"));
+            DateTime endTime = DateTime.Parse(matchCollection[1].Value, new CultureInfo("en-GB"));
             
-            Inputs.Add(new Input(name, startDate, endDate));
+            Inputs.Add(new Input(name, startTime, endTime));
         }
     }
-
+    
     public override string ToString()
     {
         int index = 1;
