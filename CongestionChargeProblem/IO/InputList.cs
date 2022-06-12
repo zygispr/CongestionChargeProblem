@@ -22,7 +22,7 @@ public class InputList
             string name = matchCollection[0].Value;
             
             // Here I get the StartTime and EndTime:
-            pattern = @"\d{2}\/\d{2}\/\d{4}\s\d{2}:\d{2}";
+            pattern = @"\d+\/\d+\/\d+\s*\d+:\d+";
             matchCollection = Regex.Matches(inputString, pattern);
             DateTime startTime = DateTime.Parse(matchCollection[0].Value, new CultureInfo("en-GB"));
             DateTime endTime = DateTime.Parse(matchCollection[1].Value, new CultureInfo("en-GB"));
@@ -39,7 +39,7 @@ public class InputList
         foreach (var input in Inputs)
         {
             sb.Append($"INPUT {index}\n");
-            sb.Append($"{input.Name}: {input.StartTime.ToString("dd/MM/yyyy HH:mm")} - {input.EndTime.ToString("dd/MM/yyyy HH:mm")}\n");
+            sb.Append($"{input.Name}: {input.StartTime.ToString("dd/MM/yyyy HH:mm")} - {input.EndTime.ToString("dd/MM/yyyy HH:mm")}\n\n");
             index++;
         }
 
